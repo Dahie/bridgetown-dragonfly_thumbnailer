@@ -21,16 +21,53 @@ describe(DragonflyThumbnailer) do
       }
     }
   end
+  let(:preface) do
+    "---\nlayout: default\n---\n\n"
+  end
   let(:site) { Bridgetown::Site.new(config) }
   let(:contents) { File.read(dest_dir("index.html")) }
+
   before(:each) do
+    allow(Bridgetown).to receive(:environment).and_return "production"
+    allow(Bridgetown).to receive(:configuration).and_return config
     metadata = metadata_defaults.merge(metadata_overrides).to_yaml.sub("---\n", "")
+    File.write(source_dir("index.html"), code)
     File.write(source_dir("_data/site_metadata.yml"), metadata)
     site.process
     FileUtils.rm(source_dir("_data/site_metadata.yml"))
   end
 
-  it "outputs the sample Liquid tag" do
-    expect(contents).to match "This plugin works!"
+  context "image is found" do
+    context "thumb_path with parameters" do
+      let(:code) do
+        preface + "Image path: {{ 'images/rc-20-ef.jpg' | thumbnail:20x20 }}"
+      end
+
+      it "outputs the original path" do
+        expect(contents).to match "Image path: images/20x20/rc-20-ef.jpg"
+      end
+    end
+
+    context "thumb_path without parameters" do
+      let(:code) do
+        preface + "Image path: {{ 'images/rc-20-ef.jpg' | thumbnail }}"
+      end
+
+      it "outputs the original path" do
+        expect do
+          contents
+        end.to raise_error(Liquid::ArgumentError)
+      end
+    end
+  end
+
+  context 'image is not found' do
+    let(:code) do
+        preface + "Image path: {{ 'images/rc-20-ef-not-existing.jpg' | thumbnail:20x20 }}"
+      end
+
+    it "outputs the original path" do
+      expect(contents).to match "Image path: images/rc-20-ef-not-existing.jpg"
+    end
   end
 end

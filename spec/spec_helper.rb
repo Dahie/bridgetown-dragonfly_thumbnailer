@@ -11,8 +11,10 @@ RSpec.configure do |config|
   config.order = "random"
 
   ROOT_DIR = File.expand_path("fixtures", __dir__)
+  puts ROOT_DIR
   SOURCE_DIR = File.join(ROOT_DIR, "src")
   DEST_DIR   = File.expand_path("dest", __dir__)
+  puts DEST_DIR
 
   def root_dir(*files)
     File.join(ROOT_DIR, *files)
