@@ -40,10 +40,10 @@ describe(DragonflyThumbnailer) do
   context "image is found" do
     context "thumb_path with parameters" do
       let(:code) do
-        preface + "Image path: {{ 'images/rc-20-ef.jpg' | thumbnail:20x20 }}"
+        preface + "Image path: {{ 'images/rc-20-ef.jpg' | thumbnail:'20x20' }}"
       end
 
-      it "outputs the original path" do
+      it "outputs path with geometry" do
         expect(contents).to match "Image path: images/20x20/rc-20-ef.jpg"
       end
     end
@@ -53,17 +53,15 @@ describe(DragonflyThumbnailer) do
         preface + "Image path: {{ 'images/rc-20-ef.jpg' | thumbnail }}"
       end
 
-      it "outputs the original path" do
-        expect do
-          contents
-        end.to raise_error(Liquid::ArgumentError)
+      it "outputs the path with default geometry" do
+        expect(contents).to match "Image path: images/100x100/rc-20-ef.jpg"
       end
     end
   end
 
   context 'image is not found' do
     let(:code) do
-        preface + "Image path: {{ 'images/rc-20-ef-not-existing.jpg' | thumbnail:20x20 }}"
+        preface + "Image path: {{ 'images/rc-20-ef-not-existing.jpg' | thumbnail:'20x20' }}"
       end
 
     it "outputs the original path" do

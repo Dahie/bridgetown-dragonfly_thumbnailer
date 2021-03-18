@@ -16,11 +16,15 @@ $ bundle add bridetown-dragonfly_thumbnailer -g bridgetown_plugins
 
 This plugin adds the liquid filter `thumbnail` that lets you create scaled versions of pictures.
 
-    {{ images/intro.jpg | thumbnail:200x150 }}
+    {{ images/intro.jpg | thumbnail:'200x150' }}
 
 In development, this will create base64-image data right in your HTML.
 When you deploy (with BRIDGETOWN_ENV=production), it'll write the scaled images to disk.
 In the above example, it'd save it in `output/images/200x150/intro.jpg`
+
+_Note, providing no geometry parameter to the filter will default to `100x100`._
+
+Checkout the [Dragonfly documentation](https://markevans.github.io/dragonfly/imagemagick) to learn more about its resizing and cropping syntax.
 
 ## Testing
 

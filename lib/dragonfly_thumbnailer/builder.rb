@@ -4,7 +4,7 @@ module DragonflyThumbnailer
   class Builder < Bridgetown::Builder
     def build
       # liquid_tag :thumb_path do |attributes|
-      liquid_filter "thumbnail" do |path, geometry|
+      liquid_filter "thumbnail" do |path, geometry='100x100'|
         # path, geometry = attributes.split(",").map(&:strip)
         puts geometry.inspect
         _options, image_options = extract_image_options({})
