@@ -1,7 +1,5 @@
 # Thumbnails with Dragonfly for Bridgetown
 
-_Starting with Bridgetown v0.15, you can run_ `bridgetown plugins new` _to easily set up a customized verison of this starter repo._
-
 Bridgetown Dragonfly Thumbnailer is a Bridgetown plugin that lets you easily create thumbnails using Dragonfly's fantastic thumb processor.
 
 ## Installation
